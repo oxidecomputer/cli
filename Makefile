@@ -139,17 +139,6 @@ start-omicron: start-cockroachdb ## Start Omicron.
 		ghcr.io/oxidecomputer/omicron:$(OMICRON_DOCKER_VERSION) \
 			B100B75C-D2EF-415F-A07E-D3915470913D 0.0.0.0:12345 0.0.0.0:12221
 
-.PHONY: gen-docs
-gen-docs: gen-md gen-man ## Generate all the docs.
-
-.PHONY: gen-md
-gen-md: build  ## Generate the markdown documentation.
-	$(CURDIR)/target/debug/oxide generate markdown --dir $(GENERATED_DOCS_DIR)/md
-
-.PHONY: gen-man
-gen-man: build ## Generate the man pages.
-	$(CURDIR)/target/debug/oxide generate man-pages --dir $(GENERATED_DOCS_DIR)/man
-
 .PHONY: help
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | sed 's/^[^:]*://g' | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
